@@ -8,6 +8,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "eventi")
+//crea tante tabelle quante sono le sottoclassi complete di tutti i dati anche della superclasse
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "eventi_id_table")

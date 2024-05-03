@@ -8,6 +8,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "persone")
+//NamedQuery crea una query che può essere richiamata con il nome
+@NamedQuery(name = "getPersonaByName", query = "select p from Persona p where p.nome= :nome")
 public class Persona {
 
     @Id
@@ -25,6 +27,15 @@ public class Persona {
     private Sesso Sesso;
     @OneToMany(mappedBy = "persona")
     private List<Partecipazione> partecipazioni;
+
+    @OneToMany(mappedBy = "vincitore")
+    private List<GaraDiAtletica> gareVinte;
+
+    @ManyToMany
+    @JoinTable(name = "atleta_gara",
+    joinColumns = @JoinColumn(name = "atleta_id"),
+    inverseJoinColumns = @JoinColumn(name = "gara_id"))
+    private List<GaraDiAtletica> gareDiAtletica;
 
     public Persona(int id, String nome, String cognome, String email, LocalDate dataDiNascita, epicode.enums.Sesso sesso) {
         this.id = id;
@@ -93,5 +104,17 @@ public class Persona {
 
     public void setPartecipazioni(List<Partecipazione> partecipazioni) {
         this.partecipazioni = partecipazioni;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", dataDiNascita=" + dataDiNascita +
+                ", Sesso=" + Sesso +
+                '}';
     }
 }

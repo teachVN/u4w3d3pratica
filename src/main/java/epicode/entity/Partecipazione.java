@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "partecipazioni")
+@NamedQuery(name = "getPersonaByEvento", query = "select part.persona from Partecipazione part where part.evento= :evento")
 public class Partecipazione {
 
     @Id

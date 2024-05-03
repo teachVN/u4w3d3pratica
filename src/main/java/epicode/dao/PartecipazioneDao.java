@@ -2,9 +2,12 @@ package epicode.dao;
 
 import epicode.entity.Evento;
 import epicode.entity.Partecipazione;
+import epicode.entity.Persona;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import java.util.List;
 
 public class PartecipazioneDao {
 
@@ -40,5 +43,17 @@ public class PartecipazioneDao {
 
         et.commit();
 
+    }
+
+    public List<Persona> getPersonaByEvento(Evento evento){
+        Query query = em.createNamedQuery("getPersonaByEvento");
+        query.setParameter("evento", evento);
+        return query.getResultList();
+    }
+
+    public Number countPersonaByEvento(Evento evento){
+        Query query = em.createQuery("select count(part) from Partecipazione part where part.evento=:evento");
+        query.setParameter("evento", evento);
+        return (Number) query.getSingleResult();
     }
 }
